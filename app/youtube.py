@@ -8,6 +8,7 @@ from matplotlib import pyplot as plt
 youtube = build('youtube', 'v3', developerKey=settings.YOUTUBE_API_KEY)
 
 response = youtube.search().list(
+q='第72回NHK紅白歌合戦のハイライト動画をお届けします',
 part='snippet',
 channelId=settings.NHK_CHANNEL_ID,
 maxResults=50,
@@ -16,13 +17,14 @@ order='date'
 
 dict = {}
 for item in response['items']:
-    if '2020-12-31' in item['snippet']['publishedAt'] and '『' in item['snippet']['title']:
         video_id = item['id']['videoId']
         res = youtube.videos().list(part='statistics',id=video_id).execute()
         for video in res['items']:
             dict[item['snippet']['title']]=int(video['statistics']['viewCount'])
 
 desc_list = sorted(dict.items(), reverse=True, key=lambda x:x[1])
+
+print(desc_list)
 
 labels = []
 y = []
