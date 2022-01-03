@@ -1,1 +1,1 @@
-![](/app/plot.png)
+![](/res/2020/plot.png)
